@@ -1,0 +1,65 @@
+{%  extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<link rel="stylesheet" href="/static/css/propriedades.css">
+<br>
+<div class="row" style="margin-left: 20px; margin-right: 20px">
+	<div class="col-md-4">
+		<div class="card card-body">
+            <h5>Complete a oferta: </h5>
+            <br>
+            <form method="POST" action="">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input class="btn btn-primary" type="submit" Name="Update Information" value="Confirmar">
+            </form>
+		</div>
+	</div>
+	<div class="col-md-8">
+        <div class="card card-body" style="margin-bottom: 20px;">
+			<hr style="margin-top: 5px;">
+			<h3 style="text-align: center">{{propriedade.titulo}}</h3>
+			<br>
+			<div class="row">
+				<div class="col-sm-4">
+					<img class="img-fluid img-responsive rounded product-image" style="width: 125%;" src="{{propriedade.profile_pic.url}}">
+				</div>
+				<div class="col-sm-8">
+					<div class="mt-1 mb-1 spec-1">
+                        <span>Valor por mês</span><span style="float:right;">${{propriedade.preco}}</span>
+					</div>
+					<div class="mt-1 mb-1 spec-1">
+                        <span>Valor por semestre</span><span style="float:right;">${{propriedade.preco_semestral}}</span>
+					</div>
+					<div class="mt-1 mb-1 spec-1">
+                        <span>Valor por ano</span><span style="float:right;">${{propriedade.preco_anual}}</span>
+					</div>
+					<br>
+					<div class="mt-1 mb-1 spec-1">
+						<span>Senhorio</span><span style="float:right;">{{propriedade.senhorio}}</span>
+					</div>
+					
+					<div class="mt-1 mb-1 spec-1">
+						<span>Local</span><span style="float:right;">{{propriedade.local}}</span>
+					</div>
+				</div>
+			</div>
+			<hr>
+            <a class="btn btn-primary" href="{% url 'propriedades' %}"> &#8592; Voltar a Propriedades</a>
+		</div>
+	</div>
+</div>
+
+
+
+{% endblock %}

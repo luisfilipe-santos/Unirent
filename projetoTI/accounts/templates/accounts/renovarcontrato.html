@@ -1,0 +1,29 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content%}
+
+<br>
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body" style="margin-left: 20px;">
+            {% if item.periodo == "Mensal" %}
+                <p>Por quantos meses deseja renovar o seu contrato da propriedade {{item.propriedade.titulo}}?</p>
+                <p>Mensalidade: ${{item.propriedade.preco}}</p>
+            {% elif item.periodo == "Semestral" %}
+                <p>Por quantos semestres deseja renovar o seu contrato da propriedade {{item.propriedade.titulo}}?</p>
+                <p>Semestralidade: ${{item.propriedade.preco_semestral}}</p>
+            {% elif item.periodo == "Anual" %}
+                <p>Por quantos anos deseja renovar o seu contrato da propriedade {{item.propriedade.titulo}}?</p>
+                <p>Anualidade: ${{item.propriedade.preco_anual}}</p>
+            {% endif %}
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{form.as_p}}
+                <a class="btn btn-warning" href="{% url 'contrato-inquilino' %}">Cancelar</a>
+                <input class="btn btn-primary" type="submit" Name="Update Information" value="Confirmar">
+            </form>
+        </div>
+    </div>
+</div>
+
+{%  endblock %}

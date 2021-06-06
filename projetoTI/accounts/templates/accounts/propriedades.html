@@ -1,0 +1,107 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content%}
+
+<html>
+<link rel="stylesheet" href="/static/css/propriedades.css">
+<link rel="stylesheet" href="/static/css/propriedades2.css">
+<body>
+    <div class="filters-model">
+        <div class="model-content"> 
+            <div class="close">+</div>
+            <form id="form2" style="display: none;" method="get">
+            <p class="col-sm" >
+                <div style="margin-top: 10px; margin-left: 16px;">
+                    <p>Titulo: {{myFilter.form.titulo}}</p>
+                    <p>Local: {{myFilter.form.local}}</p>
+                    <p>Preço de: {{myFilter.form.preco__gt}} até : {{myFilter.form.preco__lt}}</p>
+                    <p>Internet: {{myFilter.form.internet}}</p>
+                    <p>Animais: {{myFilter.form.pets}}</p>
+                    <p>Limpeza: {{myFilter.form.limpeza}}</p>
+                    <p>Fumador: {{myFilter.form.fumador}}</p>
+                </div>
+            </p>
+            <button style="margin-top: 10px; margin-left: 16px;" class="btn btn-primary">Pesquisar</button>
+        </form></div>
+    </div>
+    <div class="container mt-5 mb-5">
+        <div class="d-flex justify-content-center row">
+            <div>
+                <div>     
+                    <div class="row">
+                        <form method="get" id="form1">
+                            <div class="spacing"></div>
+                            <div class="col-sm">
+                                <h4>Pesquisa: {{myFilter.form.titulo}}</h4>
+                            </div>
+                            <button style="margin-top: 10px; margin-left: 16px;" class="btn btn-primary">Pesquisar</button>
+                            <div id="button2" style="margin-top: 10px; margin-left: 2px;" class="my-fitlers" onclick="disappearForm()">
+                                + filtros
+                            </div>
+                            <div class="spacing"></div>
+    
+                        </form>
+                    </div>
+                </div>
+            <div class="bs"> </div>
+            {% for i in propriedades %}
+            <div class="row p-2 bg-white border rounded" style="margin-bottom: 5px;">
+                <div class="col-md-3 mt-1" style="margin-bottom: 5px;"><img class="img-fluid img-responsive rounded product-image" src="{{i.profile_pic.url}}"></div>
+                <div class="col-md-6 mt-1">
+                    {% if i.disponivel == True %}
+                        <h5>{{i.titulo}}</h5>
+                    {% else %}
+                        <h5>(INDISPONÍVEL) {{i.titulo}}</h5>
+                    {% endif %}
+                    <div class="mt-1 mb-1 spec-1">
+                        <span>{{i.local}}</span><span style="float:right;">{{i.area}}m²</span>
+                    </div>
+                    <div class="mt-1 mb-1 spec-1">
+                        <a href="{% url 'perfil-user' i.senhorio.id i.senhorio.grupo %}"><span>{{i.senhorio}}</span></a><span style="float:right;">{{i.numero_quartos}} Quartos disponíveis</span>
+                    </div>
+                    <br style="line-height: 2%;"> 
+                    <p class="text-justify para mb-0">{{i.Bio}}<br><br></p>
+                </div>
+                <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                    <div class="d-flex flex-row align-items-center">
+                        <h4 class="mr-1">${{i.preco}}</h4>
+                    </div>
+                    <h6>/mês</h6>
+                    <div class="d-flex flex-column mt-4">
+                        <a href="{% url 'detalhes-propriedades' i.id %}"><button style="width: 100%;" class="btn btn-primary btn-sm" type="button">Detalhes</button></a>
+                        {% for group in user.groups.all %}
+                            {% if group.name == 'inquilino' %} 
+                                <a href="{% url 'newconversation' i.senhorio.user %}" style="margin-bottom: 20px; margin-top: 5px;"><button class="btn btn-primary btn-sm" style="width: 100%;" type="button">Contactar Senhorio</button></a>
+                                {% if i.disponivel == True %}
+                                    <a href="{% url 'create-oferta' i.id i.senhorio %}"><button class="btn btn-outline-primary btn-sm mt-2" style="width: 100%;" type="button">Alugar</button></a>
+                                {% else %}
+                                    <h5> (LOTADA) </h5>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    document.getElementById('button2').addEventListener('click', 
+    function() {
+        document.querySelector('.filters-model').style.display = 'flex';
+    });
+    document.querySelector('.close').addEventListener('click', 
+    function(){
+        document.querySelector('.filters-model').style.display = 'none';
+    })
+
+    function disappearForm(){
+        document.getElementById('form2').style.display = 'block';
+    }
+</script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+</html>
+{% endblock %}

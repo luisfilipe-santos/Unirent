@@ -1,0 +1,33 @@
+{% load static %}
+
+<style>
+  .hello-msg{
+    font-size: 20px;
+    color: #193755da;
+    margin-right: 20px;
+  }
+  #logo {
+    width: 46px;
+    margin-left: -7px;
+    margin-right: 20px;
+  }
+
+</style>
+
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #7abecc;">
+    <img id="logo" src="{% static 'images/unirentlogo.png' %}">
+    <a class="navbar-brand" style="color: #193755da; font-family: 'Century Gothic'; font-size: 25px;" href="{% url 'free-propriedades' %}">UniRent</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav" >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'free-propriedades' %}" style="color: #193755da; font-family: 'Century Gothic'; font-size: 18px;">Propriedades</a>
+        </li>
+      </ul>
+    </div>
+    <span ><a  class="hello-msg" style="color: #193755da; font-family: 'Century Gothic';" href="{% url 'login' %}">Entrar!</a></span>
+    <span ><a  class="hello-msg" style="color: #193755da; font-family: 'Century Gothic';" href="{% url 'register' %}">Registe-se!</a></span>
+  </nav>

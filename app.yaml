@@ -1,0 +1,23 @@
+runtime: python
+env: flex
+entrypoint: gunicorn -b :$PORT --chdir projetoTI/ projetoTI.wsgi:application
+
+#[START cloudsql_settings]
+# Replace project and instance with the values obtained  when configuring your
+# Cloud SQL instance.
+env_variables:
+  SECRET_KEY: 'e$*w0x(dt(%8(2h+gbl4-dwoic3seb4xiilwns=w2$(ugb4ted'
+
+beta_settings:
+    cloud_sql_instances: unirentv:europe-west2:unirentv-instance
+#[END cloudsql_settings]
+
+runtime_config:
+  python_version: 3
+
+handlers:
+  - url: /static
+    static_dir: static/
+
+  - url: /.*
+    script: auto

@@ -1,0 +1,142 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+<link rel="stylesheet" href="/static/css/propriedades.css">
+<div class="columns is-mobile" style="margin-top: 10px;">
+
+<div class="column is-one-quarter" style="margin-left: 30px;">
+  <aside class="menu">
+    <a href="{% url 'usersearch' %}" class="button is-success" style="margin-bottom: 10px; margin-left: 12px;"> Nova Mensagem </a>
+  <ul style="overflow-y: scroll; height: 500px" class="menu-list">
+
+{% for message in messages %}
+
+<a class="{% if active_direct == message.user.username %}is-active{% endif %}" href="{% url 'directs' message.user.username %}">
+<div class="box">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-64x64">
+        {% for group in message.user.groups.all %}
+          {% if group.name == 'senhorio' %}
+            <img src="{{ message.user.senhorio.profile_pic.url }}" alt="Placeholder image">
+          {% endif %}
+          {% if group.name == 'inquilino' %}
+            <img src="{{ message.user.inquilino.profile_pic.url }}" alt="Placeholder image">
+          {% endif %}
+          {% if group.name != 'inquilino' and group.name != 'senhorio' %}
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+          {% endif %}
+        {% endfor %}
+      </figure>
+    </div>
+    <div class="media-content">
+
+      <div class="content">
+        <p>
+          {% for group in message.user.groups.all %}
+            {% if group.name == 'senhorio' %}
+              <strong>{{ message.user.senhorio.name }}</strong> <small>@{{ message.user.username }}</small>
+            {% endif %}
+            {% if group.name == 'inquilino' %}
+              <strong>{{ message.user.inquilino.name }}</strong> <small>@{{ message.user.username }}</small>
+            {% endif %}
+          {% endfor %}
+        </p>
+      </div>
+
+      <div class="content">
+        {% if message.unread %}
+        <p style="font-weight: bold; color: red;">
+          <i class="material-icons">mark_chat_unread</i> {{ message.unread }}
+        </p>
+        {% endif %}        
+      </div>
+
+    </div>
+  </article>
+</div>
+</a>
+{% endfor %}
+
+  </ul>
+  </aside>
+<br>
+
+</div>
+
+<div class="column" style="margin-right: 30px;">
+
+<div style="overflow-y: scroll; height: 500px">
+
+{% for direct in directs %}
+<div class="box" style="margin-bottom: 20px;">
+  <article class="media">
+    <div class="media-left">
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          {% for group in direct.sender.groups.all %}
+            {% if group.name == 'senhorio' %}
+              <strong>{{ direct.sender.senhorio.name }}</strong> <small>@{{ direct.sender.username }}</small> on: <strong><small>{{ direct.date|date:'N d G:i'}}</small></strong>
+            {% endif %}
+            {% if group.name == 'inquilino' %}
+              <strong>{{ direct.sender.inquilino.name }}</strong> <small>@{{ direct.sender.username }}</small> on: <strong><small>{{ direct.date|date:'N d G:i'}}</small></strong>
+            {% endif %}
+          {% endfor %}
+        </p>
+        {{ direct.body }} 
+      </div>
+    </div>
+  </article>
+</div>
+{% endfor %}
+
+
+</div>
+
+
+<form role="form" method="POST" action="{% url 'send_direct' %}" style="margin-top: 8px; margin-right: 17px;">
+  {% csrf_token %}
+<article class="media">
+  <figure class="media-left">
+    <p class="image is-64x64">
+      {% for group in user.groups.all %}
+          {% if group.name == 'senhorio' %}
+            <img src="{{ user.senhorio.profile_pic.url }}" alt="Placeholder image">
+          {% endif %}
+          {% if group.name == 'inquilino' %}
+            <img src="{{ user.inquilino.profile_pic.url }}" alt="Placeholder image">
+          {% endif %}
+          {% if group.name != 'inquilino' and group.name != 'senhorio' %}
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+          {% endif %}
+        {% endfor %}
+    </p>
+  </figure>
+  <div class="media-content">
+    <input type="hidden" name="to_user" value="{{ active_direct }}">
+    <div class="field">
+      <p class="control">
+        <textarea class="textarea" name="body" placeholder="Escreva a sua mensagem..."></textarea>
+      </p>
+    </div>
+    <nav class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <button type="submit" name="action" class="button is-info">Enviar</buttom>
+        </div>
+      </div>
+    </nav>
+  </div>
+</article>
+</form>
+
+</div>
+</div>
+<br>
+
+{% endblock %}

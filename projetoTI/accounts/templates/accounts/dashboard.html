@@ -1,0 +1,57 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+
+<link rel="stylesheet" href="/static/css/propriedades.css">
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-9">
+            <h3>Exportar Data (.xls)</h3>
+            <div class="row p-2 bg-white border rounded" style="margin-bottom: 5px;  margin-top: 12px;">
+                <div class="col-md-4">
+                    <form action="{% url 'export-inquilinos' %}" method="post">
+                        {% csrf_token %}
+                        <a ><button class="btn btn-primary">Exportar Inquilinos</button></a>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form action="{% url 'export-senhorios' %}" method="post">
+                        {% csrf_token %}
+                        <a ><button class="btn btn-primary">Exportar Senhorios</button></a>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form action="{% url 'export-propriedades' %}" method="post">
+                        {% csrf_token %}
+                        <a ><button class="btn btn-primary">Exportar Propriedades</button></a>
+                    </form>
+                </div>
+                <br>
+                <br>
+				<div class="col-md-4">
+					<form action="{% url 'import-inquilinos' %}" method="post" enctype="multipart/form-data">
+						{% csrf_token %}
+						<a ><input type="submit" class="btn btn-primary" value="Importar Inquilinos"></a>
+						<input type="file" name="myfile" accept=".xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/ms-excel">
+					</form>
+				</div>
+				<div class="col-md-4">
+					<form action="{% url 'import-senhorios' %}" method="post" enctype="multipart/form-data">
+						{% csrf_token %}
+						<a ><input type="submit" class="btn btn-primary" value="Importar Senhorios"></a>
+						<input type="file" name="myfile2" accept=".xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/ms-excel">
+					</form>
+				</div>
+				<div class="col-md-4">
+					<form action="{% url 'import-propriedades' %}" method="post" enctype="multipart/form-data">
+						{% csrf_token %}
+						<a ><input type="submit" class="btn btn-primary" value="Importar Propriedades"></a>
+						<input type="file" name="myfile3" accept=".xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/ms-excel">
+					</form>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

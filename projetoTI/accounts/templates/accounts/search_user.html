@@ -1,0 +1,67 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+<link rel="stylesheet" href="/static/css/propriedades.css">
+<div class="columns is-mobile">
+  <div class="column is-offset-one-fifth">
+    <div class="field has-addons" style="margin-top: 20px;">
+    <form>
+      <div class="control">
+        <input class="input is-medium" name="q" type="text" placeholder="Search users..." value="{{ request.GET.q }}">
+      </div>
+      <div class="control">
+        <button type="submit" class="button is-success">Search</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="column is-one-quarter">
+
+{% for user in users %}
+<div class="box">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-64x64">
+        {% for group in user.groups.all %}
+        {% if group.name == 'senhorio' %}
+          <img src="{{ user.senhorio.profile_pic.url }}" alt="Placeholder image">
+        {% endif %}
+        {% if group.name == 'inquilino' %}
+          <img src="{{ user.inquilino.profile_pic.url }}" alt="Placeholder image">
+        {% endif %}
+        {% if group.name != 'inquilino' and group.name != 'senhorio' %}
+          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+        {% endif %}
+      {% endfor %}
+      </figure>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          {% for group in user.groups.all %}
+            {% if group.name == 'senhorio' %}
+              <strong>{{ user.senhorio.name }}</strong><small> @{{ user.username }}</small>
+            {% endif %}
+            {% if group.name == 'inquilino' %}
+              <strong>{{ user.inquilino.name }}</strong><small> @{{ user.username }}</small>
+            {% endif %}
+          {% endfor %}
+        </p>
+        <a href="{% url 'newconversation' user.username %}" class="button is-info">Enviar Mensagem!</a>
+      </div>
+    </div>
+  </article>
+</div>
+{% endfor %}
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+</div>
+
+{% endblock %}

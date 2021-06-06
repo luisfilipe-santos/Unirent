@@ -1,0 +1,63 @@
+
+    .container{
+        color:black;
+        width: 90%;
+    }
+    .row{
+        background-color: white;
+    }
+    .my-fitlers{
+        position: relative;
+        left: 3%;
+        border-radius: 10px;
+		border: 1px solid #000000;
+		background-color: #000000;
+		color: #FFFFFF;
+		font-size: 10px;
+		font-weight: bold;
+		padding: 6px;
+        width: 80px;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+		transition: transform 80ms ease-in;
+        cursor: pointer;
+    }
+    .filters-model{
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0, 0.7);
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: none;
+    }
+    .model-content{
+        width: 650px;
+        height: 450px;
+        color: rgb(0, 0, 0);
+        background-color: rgb(255, 255, 255);
+        border-color: solid 5px black;
+        border-radius: 2%;
+        text-align: center;
+        padding: 20px;
+        z-index: 2;
+        position: relative;
+    }
+    .close {
+        position: absolute;
+        top: 0;
+        right: 14px;
+        font-size: 42px;
+        transform: rotate(45deg);
+        cursor: pointer;
+    }
+    .bs {
+        background-color: #eee;
+        height: 30px;
+    }
+    .spacing{
+        color: white;
+        height: 20px;
+    }

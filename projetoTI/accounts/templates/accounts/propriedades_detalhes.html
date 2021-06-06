@@ -1,0 +1,126 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content%}
+
+<link rel="stylesheet" href="/static/css/propriedades.css">
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-10">
+            <div class="row p-2 bg-white border rounded" style="margin-bottom: 5px;">
+                <div class="col-md-3 mt-1" style="margin-bottom: 5px;">
+                    <img style="margin-bottom: 7px;" class="img-fluid img-responsive rounded product-image" src="{{propriedades.profile_pic.url}}">
+                </div>
+                <div class="col-md-9 mt-1">
+                    {% if propriedades.disponivel == True %}
+                        <h3>{{propriedades.titulo}}</h3>
+                    {% else %}
+                        <h3>{{propriedades.titulo}} (Indisponível até {{shortest|date:'Y-m-d'}})</h3>
+                    {% endif %}
+                    <div class="mt-1 mb-1 spec-1">
+                        <span>{{propriedades.local}}</span>
+                    </div>
+                    <br>
+                    <div class="mt-1 mb-1 spec-1">
+                        <span><strong>Senhorio:</strong></span><a href="{% url 'perfil-user' propriedades.senhorio.id propriedades.senhorio.grupo %}"> <span style="float:right;">{{propriedades.senhorio}}</span> </a>
+                    </div>
+                    <hr style="margin-bottom: -2px; margin-top: -2px;">
+                    <div class="mt-1 mb-1 spec-1">
+                        <span><strong>Preço Mês:</strong></span><span style="float:right;">${{propriedades.preco}} /mês</span>
+                    </div>
+                    <div class="mt-1 mb-1 spec-1">
+                        <span><strong>Preço Semestre:</strong></span><span style="float:right;">${{propriedades.preco_semestral}} /semestre</span>
+                    </div>
+                    <div class="mt-1 mb-1 spec-1">
+                        <span><strong>Preço Ano:</strong></span><span style="float:right;">${{propriedades.preco_anual}} /ano</span>
+                    </div>
+                    <hr style="margin-bottom: -2px; margin-top: -2px;">
+                    <div class="mt-1 mb-1 spec-1">
+                        <span><strong>Area:</strong></span><span style="float:right;">{{propriedades.area}}m²</span>
+                    </div>
+                    <hr style="margin-bottom: -2px; margin-top: -2px;">
+                    <div class="mt-1 mb-1 spec-1">
+                        <span><strong>Número de Quartos disponíveis:</strong></span><span style="float:right;">{{propriedades.numero_quartos}} Quarto(s) </span>
+                    </div>
+                    <hr style="margin-bottom: -2px; margin-top: -2px;">
+                    <div class="mt-1 mb-1 spec-1">
+                        <span><strong>Número de Inquilinos:</strong></span><span style="float:right;">{{propriedades.numero_inquilinos}} Inquilino(s) </span>
+                    </div>
+                    <hr style="margin-bottom: -2px; margin-top: -2px;">
+                    <div class="mt-1 mb-1 spec-1">
+                        <span><strong>Orientação Solar:</strong></span><span style="float:right;">{{propriedades.orientacao_solar}}</span>
+                    </div>
+                    <hr style="margin-bottom: -2px; margin-top: -2px;">
+                    <div class="mt-1 mb-1 spec-1">
+                        {% if propriedades.limpeza != False %}
+                            <span><strong>Limpeza:</strong></span><span style="float:right;">Sim</span>
+                        {% else %}
+                            <span><strong>Limpeza:</strong></span><span style="float:right;">Não</span>
+                        {% endif %}
+                    </div>
+                    <hr style="margin-bottom: -2px; margin-top: -2px;">
+                    <div class="mt-1 mb-1 spec-1">
+                        {% if propriedades.pets != False %}
+                            <span><strong>Animais de estimação:</strong></span><span style="float:right;">Permitidos</span>
+                        {% else %}
+                            <span><strong>Animais de estimação:</strong></span><span style="float:right;">Não são Permitidos</span>
+                        {% endif %}
+                    </div>
+                    <hr style="margin-bottom: -2px; margin-top: -2px;">
+                    <div class="mt-1 mb-1 spec-1">
+                        {% if propriedades.fumador != False %}
+                            <span><strong>Permitido Fumar:</strong></span><span style="float:right;">Sim</span>
+                        {% else %}
+                            <span><strong>Permitido Fumar:</strong></span><span style="float:right;">Não</span>
+                        {% endif %}
+                    </div>
+                    <hr style="margin-bottom: -2px; margin-top: -2px;">
+                    <div class="mt-1 mb-1 spec-1">
+                        {% if propriedades.internet != False %}
+                            <span><strong>Acesso à Internet:</strong></span><span style="float:right;">Sim</span>
+                        {% else %}
+                            <span><strong>Acesso à Internet:</strong></span><span style="float:right;">Não</span>
+                        {% endif %}
+                    </div>
+                    <hr style="margin-bottom: -2px; margin-top: -2px;">
+                    <div class="mt-1 mb-1 spec-1">
+                        <span><strong>Género permitido:</strong></span><span style="float:right;">{{propriedades.genero}}</span>
+                    </div>
+                    <hr style="margin-bottom: -2px; margin-top: -2px;">
+                    <div class="mt-1 mb-1 spec-1">
+                        <span><strong>Faixa etária desejada:</strong></span><span style="float:right;">{{propriedades.faixa_etaria}}</span>
+                    </div>
+                    
+                    <br style="line-height: 2%;">
+                    <div class="mt-1 mb-1 spec-1">
+                        <span><strong>Descrição:</strong></span>
+                    </div>
+                    <p class="text-justify para mb-0">{{propriedades.Bio}}<br><br></p>
+
+                    <hr>
+                    <h3>Avaliações e Reviews...</h3>
+                    {% for group in user.groups.all %}
+                    {% if group.name == 'inquilino' %}
+                        Faça a sua review <a href="{% url 'rate-propriedades' propriedades.id %}">aqui</a>.
+                    {% endif %}
+                    {% endfor %}
+                    <br><br>
+                    {% for review in reviews %}
+                        <img src="{{review.user.inquilino.profile_pic.url}}" alt="Admin" class="rounded" width="38">
+                        <strong>
+                        <a href="{% url 'perfil-user' review.user.inquilino.id review.user.inquilino.grupo %}">@{{ review.user }}</a>
+                        {{ review.date }}
+                        <i style="float:right; margin-right: 25px;">{{ review.rate }}/10</i>
+                        </strong>
+                        <br>
+                        {{ review.text }}
+                        <br><br>
+                    {% endfor %}
+                    <br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+{% endblock %}

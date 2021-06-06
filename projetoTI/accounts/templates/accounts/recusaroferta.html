@@ -1,0 +1,23 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content%}
+
+<br>
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body" style="margin-left: 20px;">
+            
+            <p>Tem a certeza que deseja recusar a oferta?</p>
+
+            <form action="{% url 'recusar-oferta' item.id %}" method="POST">
+
+                {% csrf_token %}
+                <a class="btn btn-warning" href="{% url 'oferta-senhorio' %}">Cancelar</a>
+
+                <input type="submit" class="btn btn-danger" name="Confirmar" value="Confirmar">
+            </form>
+        </div>
+    </div>
+</div>
+
+{%  endblock %}

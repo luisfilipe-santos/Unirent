@@ -1,0 +1,23 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content%}
+
+<br>
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body" style="margin-left: 20px;">
+            
+            <p>Tem a certeza que deseja terminar o contrato com {{item.inquilino.name}} sobre a propriedade {{item.propriedade.titulo}}?</p>
+
+            <form action="{% url 'terminar-contrato-senhorio' item.id %}" method="POST">
+
+                {% csrf_token %}
+                <a class="btn btn-warning" href="{% url 'contrato-senhorio' %}">Cancelar</a>
+
+                <input type="submit" class="btn btn-danger" name="Confirmar" value="Confirmar">
+            </form>
+        </div>
+    </div>
+</div>
+
+{%  endblock %}

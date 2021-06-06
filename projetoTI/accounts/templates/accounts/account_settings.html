@@ -1,0 +1,43 @@
+{%  extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="/static/css/propriedades.css">
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<br>
+<div class="row" style="margin-left: 20px; margin-right: 20px">
+	<div class="col-md-3">
+		<div class="card card-body">
+			<a class="btn btn-primary" href="{% url 'home' %}"> &#8592; Voltar ao Perfil</a>
+			<hr>
+			<h3 style="text-align: center">Definições</h3>
+			<hr>
+			<img class="profile-pic" src="{{request.user.inquilino.profile_pic.url}}" >
+		
+		</div>
+	</div>
+	<div class="col-md-9" style="margin-bottom: 30px">
+		<div class="card card-body">
+			<table>
+				<form method="POST" action="" enctype="multipart/form-data">
+					{% csrf_token %}
+					{{form.as_table}}
+			
+				<input class="btn btn-primary" style="width: 15%; margin-bottom: 15px;" type="submit" name="Update Information" value="Confirmar">
+				</form>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,62 @@
+<head>
+    <style>
+
+    </style>
+    </head>
+    
+    <body>
+        <!-- Content for Static Frame 'header_frame' -->
+        <div id="header_content">
+            <h3>UniRent</h3>
+        </div>
+    
+        <!-- HTML Content -->
+        <table>
+                <tr>
+                    <td>{{titulo}}</td>
+                </tr>
+                <tr>
+                    <td>{{local}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Senhorio</td>
+                    <td>{{senhorio}}</td>
+                    
+                </tr>
+                <tr>
+                    <td>Inquilino</td>
+                    <td>{{inquilino}}</td>
+                </tr>
+                <tr>
+                    <td>Finalização contratual</td>
+                    <td>{{fim|date:'d F, Y'}}</td>
+                </tr>
+        </table>
+    
+        <hr>
+    
+        <table>
+            <tr>
+
+                <th>Propriedade</th>
+                <th>Preço</th>
+                <th>{{periodo}}</th>
+                <th>Total</th>
+            </tr>
+            <tr>
+
+                <td>{{titulo}}</td>
+                <td>${{preco}}</td>
+                <td>{{quantidade}}</td>
+                <td>${{total}}</td>
+            </tr>
+        </table>
+    
+        <hr>
+    
+        <p><strong>Total: ${{total}}</strong></p>
+    </body>
+    </html>

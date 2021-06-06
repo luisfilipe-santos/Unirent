@@ -1,0 +1,25 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content%}
+
+<br>
+<div class="container" style="margin-bottom: 30px;">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-6 bg-white border rounded">
+            <h3 style="margin-top: 21px; margin-left: 20px;">Editar Propriedade</h3>
+            <br>
+            <table style="margin-left: 20px;">
+                <form actions="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_table }}
+                    <input class="btn btn-primary" type="submit" name="Submit" value="Confirmar" style="margin-bottom: 17px; margin-left: 20px;">
+                </form>
+            </table>
+            <br>
+        </div>      
+    </div>
+</div>
+
+ 
+
+{% endblock %}

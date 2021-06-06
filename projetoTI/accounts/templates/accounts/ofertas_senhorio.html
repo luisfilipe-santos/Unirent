@@ -1,0 +1,62 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content%}
+
+<link rel="stylesheet" href="/static/css/propriedades.css">
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-10">
+            {% for i in ofertas %}
+            <div class="row p-2 bg-white border rounded" style="margin-bottom: 5px;">
+                <div class="col-md-3 mt-1">
+                    <img class="img-fluid img-responsive rounded product-image" src="{{i.propriedade.profile_pic.url}}">
+                </div>
+                <div class="col-md-6 mt-1"> 
+                    <h5>{{i.propriedade.titulo}}</h5>
+                    <span>{{i.propriedade.local}}</span>
+                    <br><br>
+                    <div class="mt-1 mb-1 spec-1">
+                        <span>Proposta: Aluguer de 1 Quarto</span>
+                    </div>
+                    <div class="mt-1 mb-1 spec-1">
+                        {% if i.periodo == "Mensal" %}
+                            <span>Duração contratual: {{i.quantidade}} Meses</span>
+                        {% elif i.periodo == "Semestral" %}
+                            <span>Duração contratual: {{i.quantidade}} Semestres</span>
+                        {% elif i.periodo == "Anual" %}
+                            <span>Duração contratual: {{i.quantidade}} Anos</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                    <div class="d-flex flex-row align-items-center">
+                        {% if i.periodo == "Mensal" %}
+                            <h4 class="mr-1">${{i.propriedade.preco}}</h4>
+                        {% elif i.periodo == "Semestral" %}
+                            <h4 class="mr-1">${{i.propriedade.preco_semestral}}</h4>
+                        {% elif i.periodo == "Anual" %}
+                            <h4 class="mr-1">${{i.propriedade.preco_anual}}</h4>
+                        {% endif %}
+                        <a href="{% url 'perfil-user' i.inquilino.id i.inquilino.grupo %}"><img class="img-fluid img-responsive rounded product-image" src="{{i.inquilino.profile_pic.url}}" style="width: 80px; margin-left: 20px; margin-top: 1px; float:right;"></a>
+                    </div>
+                    {% if i.periodo == "Mensal" %}
+                        <h6 style="margin-top: -30px;">/mês</h6>
+                    {% elif i.periodo == "Semestral" %}
+                        <h6 style="margin-top: -30px;">/semestral</h6>
+                    {% elif i.periodo == "Anual" %}
+                        <h6 style="margin-top: -30px;">/anual</h6>
+                    {% endif %}
+                    <div class="d-flex flex-column mt-4">
+                        <a href="{% url 'aceitar-oferta' i.id %}"><button class="btn btn-success btn-sm" type="button" style="margin-bottom: 2px; width: 100%;">Aceitar</button></a>
+                        <a href="{% url 'recusar-oferta' i.id %}"><button class="btn btn-danger btn-sm" type="button" style="margin-bottom: 2px; width: 100%;">Recusar</button></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+{% endblock %}

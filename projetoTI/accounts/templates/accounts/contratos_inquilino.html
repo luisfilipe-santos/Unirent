@@ -1,0 +1,79 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content%}
+
+<link rel="stylesheet" href="/static/css/propriedades.css">
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-10">
+            <a href="{% url 'oferta-inquilino' %}" style="margin-left: -14px;"> <button class="btn btn-primary">Propostas</button></a>
+            {% for i in contratos %}
+                {% if i.inquilino.user == user.inquilino.user %}
+                <div class="row p-2 bg-white border rounded" style="margin-bottom: 5px; margin-top: 5px;">
+                    <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{i.propriedade.profile_pic.url}}"></div>
+                    <div class="col-md-6 mt-1">
+                        <h5 style="margin-bottom: 10px;">Contrato {{i.propriedade}}</h5>
+                        <div class="mt-1 mb-1 spec-1">
+                            <span>Inquilino: </span><span style="float:right;">{{i.inquilino.name}}</span>
+                        </div>
+                        <div class="mt-1 mb-1 spec-1">
+                            <span>Senhorio: </span><span style="float:right;">{{i.senhorio.name}}</span>
+                        </div>
+                        <br style="line-height: 2%;">
+                        <div class="mt-1 mb-1 spec-1"> 
+                            <span>Inicialização contratual: </span><span style="float:right;">{{i.data_created|date:'Y-m-d'}}</span>
+                        </div>
+                        <div class="mt-1 mb-1 spec-1">
+                            {% if i.expirou == True %}
+                                <span>Finalização contratual: </span><span style="float:right;"><p class="text-danger" style="font-weight: bold;">CONTRATO EXPIRADO</p></span>
+                            {% else %}
+                                {% if i.periodo == "Mensal" %}
+                                    <span>Finalização contratual: </span><span style="float:right;">{{i.duracao|date:'Y-m-d'}}</span>
+                                {% elif i.periodo == "Semestral" %}
+                                    <span>Finalização contratual: </span><span style="float:right;">{{i.duracao|date:'Y-m-d'}}</span>
+                                {% else %}
+                                    <span>Finalização contratual: </span><span style="float:right;">{{i.duracao|date:'Y-m-d'}}</span>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <br style="line-height: 2%;">
+                        <div class="mt-1 mb-1 spec-1">
+                            <span style="float:right;"><a href="{% url 'recibo' i.id %}"><button class="btn btn-primary" >Emitir Recibo</button></a></span>
+                        </div>
+                    </div>
+                    <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                        <div class="d-flex flex-row align-items-center">
+                            {% if i.periodo == "Mensal" %}
+                                <h4 class="mr-1">${{i.propriedade.preco}}</h4>
+                            {% elif i.periodo == "Semestral" %}
+                                <h4 class="mr-1">${{i.propriedade.preco_semestral}}</h4>
+                            {% elif i.periodo == "Anual" %}
+                                <h4 class="mr-1">${{i.propriedade.preco_anual}}</h4>
+                            {% endif %}
+                            <a href="{% url 'perfil-user' i.senhorio.id i.senhorio.grupo %}"><img class="img-fluid img-responsive rounded product-image" src="{{i.senhorio.profile_pic.url}}" style="width: 80px; margin-left: 30px; margin-top: 1px; float:right;"></a>
+                        </div>
+                        {% if i.periodo == "Mensal" %}
+                            <h6 style="margin-top: -30px;">/mês</h6>
+                        {% elif i.periodo == "Semestral" %}
+                            <h6 style="margin-top: -30px;">/semestral</h6>
+                        {% elif i.periodo == "Anual" %}
+                            <h6 style="margin-top: -30px;">/anual</h6>
+                        {% endif %}
+                        <div class="d-flex flex-column mt-4">
+                            <a href="{% url 'renovar-contrato' i.id %}" style="margin-bottom: 5px;"><button class="btn btn-primary btn-sm" style="width: 100%;" type="button">Renovar</button></a>
+                            <a href="{% url 'newconversation' i.senhorio.user %}"><button class="btn btn-primary btn-sm" style="width: 100%;" type="button">Contactar Senhorio</button></a>
+                        </div>
+                        <div class="d-flex flex-column mt-4">
+                            <a href="{% url 'terminar-contrato-inquilino' i.id %}"><button class="btn btn-danger btn-sm" style="width: 100%; margin-bottom: 5px;" type="button">Terminar Contrato</button></a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+{% endblock %}
