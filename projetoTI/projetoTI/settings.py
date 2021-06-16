@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = 'e$*w0x(dt(%8(2h+gbl4-dwoic3seb4xiilwns=w2$(ugb4ted'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -101,14 +101,14 @@ DATABASES = {
 # In the flexible environment, you connect to CloudSQL using a unix socket.
 # Locally, you can use the CloudSQL proxy to proxy a localhost connection
 # to the instance
-DATABASES['default']['HOST'] = '/cloudsql/unirentv:europe-west2:unirentv-instance'
+DATABASES['default']['HOST'] = '/cloudsql/unirent-316702:europe-west2:unirentpost-instance'
 if os.getenv('GAE_INSTANCE'):
     pass
 else:
     DATABASES['default']['HOST'] = '127.0.0.1'
 # [END dbconfig]
 
-
+#------------------------------------------------------MYSQL-------------------------------------------------------
 # import pymysql
 # pymysql.version_info = (1, 4, 6, 'final', 0)
 # pymysql.install_as_MySQLdb()
@@ -144,13 +144,12 @@ else:
 #         }
 #     }
 
-# else:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
+# DATABASES = {
+#          'default': {
+#              'ENGINE': 'django.db.backends.sqlite3',
+#              'NAME': BASE_DIR / 'db.sqlite3',
+#          }
+# }
 
 
 # Password validation
@@ -190,7 +189,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = 'https://storage.googleapis.com/unirentv_bucket/static/'
+STATIC_URL = 'https://storage.googleapis.com/unirent_bucket/static/'
+#STATIC_URL = '/staticfiles/'
 
 MEDIA_URL = '/images/'
 

@@ -5,11 +5,9 @@ entrypoint: gunicorn -b :$PORT --chdir projetoTI/ projetoTI.wsgi:application
 #[START cloudsql_settings]
 # Replace project and instance with the values obtained  when configuring your
 # Cloud SQL instance.
-env_variables:
-  SECRET_KEY: 'e$*w0x(dt(%8(2h+gbl4-dwoic3seb4xiilwns=w2$(ugb4ted'
 
 beta_settings:
-    cloud_sql_instances: unirentv:europe-west2:unirentv-instance
+    cloud_sql_instances: unirent-316702:europe-west2:unirentpost-instance
 #[END cloudsql_settings]
 
 runtime_config:
